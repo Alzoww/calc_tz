@@ -19,9 +19,14 @@ func result(num1, op, num2 string) string {
 
 	first, err1 := strconv.Atoi(num1)
 	second, err2 := strconv.Atoi(num2)
-	if err1 == nil && err2 == nil {
+        switch {
+	case err1 == nil && err2 == nil:
 		return strconv.Itoa(num_oper(first, second, op))
-	} else {
+	case err1 != nil && err2 == nil:
+		panic("Вывод ошибки, так как используются одновременно разные системы счисления.")
+	case err1 == nil && err2 != nil:
+		panic("Вывод ошибки, так как используются одновременно разные системы счисления.")
+	default:
 		return RomeNumber(num1, op, num2)
 	}
 }
