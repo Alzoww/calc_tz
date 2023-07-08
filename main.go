@@ -58,15 +58,15 @@ func num_oper(num1, num2 int, op string) int {
 	}
 }
 
-func RomeNumber(x, a, y string) string {
+func RomeNumber(num1, op, num2 string) string {
 	rome_map := map[string]int{
 		"I": 1, "II": 2, "III": 3, "IV": 4, "V": 5,
 		"VI": 6, "VII": 7, "VIII": 8, "IX": 9, "X": 10,
 	}
-	firstRome, ex1 := rome_map[x]
-	secondRome, ex2 := rome_map[y]
+	Rome1, ex1 := rome_map[num1]
+	Rome2, ex2 := rome_map[num2]
 	if ex1 && ex2 {
-		num := num_oper(firstRome, secondRome, a)
+		num := num_oper(Rome1, Rome2, op)
 		if num < 0 {
 			panic("Ошибка!В римской системе нет отрицательных чисел.")
 		}
