@@ -58,34 +58,29 @@ func num_oper(num1, num2 int, op string) int {
 	}
 }
 
-func RomeNumber(num1, op, num2 string) string {
+func RomeNumber(x, a, y string) string {
 	rome_map := map[string]int{
-		"I": 1, "II": 2, "III": 3, "Iv": 4, "V": 5,
+		"I": 1, "II": 2, "III": 3, "IV": 4, "V": 5,
 		"VI": 6, "VII": 7, "VIII": 8, "IX": 9, "X": 10,
 	}
-	rome1, ex1 := rome_map[num1]
-	rome2, ex2 := rome_map[num2]
-
+	firstRome, ex1 := rome_map[x]
+	secondRome, ex2 := rome_map[y]
 	if ex1 && ex2 {
-		res := num_oper(rome1, rome2, op)
-		if res < 0 {
-			panic("Вывод ошибки, так как в римской системе нет отрицательных чисел.")
+		num := num_oper(firstRome, secondRome, a)
+		if num < 0 {
+			panic("Ошибка!В римской системе нет отрицательных чисел.")
 		}
-		romesym := []string{"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"}
+		symbols := []string{"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"}
 		values := []int{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1}
-
 		var result strings.Builder
-
-		for i := 0; i < len(romesym); i++ {
-			for res >= values[i] {
-				result.WriteString(romesym[i])
-				res -= values[i]
+		for i := 0; i < len(symbols); i++ {
+			for num >= values[i] {
+				result.WriteString(symbols[i])
+				num -= values[i]
 			}
-
 		}
 		return result.String()
 	} else {
-		panic("Вывод ошибки, так как на вход ожидаются арабские или римские числа не больше 10")
+		panic("Ошибка! Ожидаются только арбские либо только рисмские числа которые не больше 10")
 	}
-
 }
