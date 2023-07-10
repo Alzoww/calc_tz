@@ -1,25 +1,84 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 	"strconv"
 	"strings"
 )
 
 const oper = "+-*/"
 
-var num1, op, num2 string
-
 func main() {
-	fmt.Scan(&num1, &op, &num2)
-	fmt.Println(result(num1, op, num2))
+	var num1, op, num2 string
+	var x int
+	reader := bufio.NewReader(os.Stdin)
+	for {
+		console, _ := reader.ReadString('\n')
+		s := strings.ReplaceAll(console, " ", "")
+		indplus := strings.Index(s, "+")
+		indmin := strings.Index(s, "-")
+		inddiv := strings.Index(s, "/")
+		indtim := strings.Index(s, "*")
+		switch {
+		case indplus != -1:
+			x = indplus
+		case indmin != -1:
+			x = indmin
+		case inddiv != -1:
+			x = inddiv
+		case indtim != -1:
+			x = indtim
+		}
+
+		num1 = s[0:x]
+		op = string(s[x])
+		switch {
+		case len(s) == 5 && len(num1) == 1:
+			num2 = s[x+1 : x+2]
+		case len(s) == 6 && len(num1) == 1:
+			num2 = s[x+1 : x+3]
+		case len(s) == 7 && len(num1) == 1:
+			num2 = s[x+1 : x+4]
+		case len(s) == 8 && len(num1) == 1:
+			num2 = s[x+1 : x+5]
+		case len(s) == 6 && len(num1) == 2:
+			num2 = s[x+1 : x+2]
+		case len(s) == 7 && len(num1) == 2:
+			num2 = s[x+1 : x+3]
+		case len(s) == 8 && len(num1) == 2:
+			num2 = s[x+1 : x+4]
+		case len(s) == 9 && len(num1) == 2:
+			num2 = s[x+1 : x+5]
+		case len(s) == 7 && len(num1) == 2:
+			num2 = s[x+1 : x+2]
+		case len(s) == 8 && len(num1) == 3:
+			num2 = s[x+1 : x+3]
+		case len(s) == 9 && len(num1) == 3:
+			num2 = s[x+1 : x+4]
+		case len(s) == 10 && len(num1) == 3:
+			num2 = s[x+1 : x+5]
+		case len(s) == 8 && len(num1) == 4:
+			num2 = s[x+1 : x+2]
+		case len(s) == 9 && len(num1) == 4:
+			num2 = s[x+1 : x+3]
+		case len(s) == 10 && len(num1) == 4:
+			num2 = s[x+1 : x+4]
+		case len(s) == 11 && len(num1) == 4:
+			num2 = s[x+1 : x+5]
+		}
+
+		fmt.Println(result(num1, op, num2))
+	}
 }
+
 func result(num1, op, num2 string) string {
 	check_op(op)
 
 	first, err1 := strconv.Atoi(num1)
 	second, err2 := strconv.Atoi(num2)
-        switch {
+	switch {
 	case err1 == nil && err2 == nil:
 		return strconv.Itoa(num_oper(first, second, op))
 	case err1 != nil && err2 == nil:
