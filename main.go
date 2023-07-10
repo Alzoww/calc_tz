@@ -12,7 +12,7 @@ const oper = "+-*/"
 
 func main() {
 	var num1, op, num2 string
-	var x int
+	var x, count int
 	reader := bufio.NewReader(os.Stdin)
 	for {
 		console, _ := reader.ReadString('\n')
@@ -21,6 +21,13 @@ func main() {
 		indmin := strings.Index(s, "-")
 		inddiv := strings.Index(s, "/")
 		indtim := strings.Index(s, "*")
+
+		count = strings.Count(s, "+") + strings.Count(s, "-") + strings.Count(s, "*") + strings.Count(s, "/")
+
+		if count > 1 {
+			panic("Вывод ошибки, так как формат математической операции не удовлетворяет заданию — два операнда и один оператор (+, -, /, *).")
+		}
+
 		switch {
 		case indplus != -1:
 			x = indplus
