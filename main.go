@@ -11,71 +11,29 @@ import (
 const oper = "+-*/"
 
 func main() {
-	var num1, op, num2 string
-	var x, count int
-	reader := bufio.NewReader(os.Stdin)
+	var num1, num2, op string
+	var count int
+
+	inputReader := bufio.NewReader(os.Stdin)
 	for {
-		console, _ := reader.ReadString('\n')
-		s := strings.ReplaceAll(console, " ", "")
-		indplus := strings.Index(s, "+")
-		indmin := strings.Index(s, "-")
-		inddiv := strings.Index(s, "/")
-		indtim := strings.Index(s, "*")
+		input, _ := inputReader.ReadString('\n')
+		input = strings.ReplaceAll(input, " ", "")
+		input = strings.ReplaceAll(input, "\n", "")
+		input = strings.ReplaceAll(input, "\r", "")
 
-		count = strings.Count(s, "+") + strings.Count(s, "-") + strings.Count(s, "*") + strings.Count(s, "/")
-
+		count = strings.Count(input, "+") + strings.Count(input, "-") + strings.Count(input, "*") + strings.Count(input, "/")
 		if count > 1 {
 			panic("Вывод ошибки, так как формат математической операции не удовлетворяет заданию — два операнда и один оператор (+, -, /, *).")
 		}
-
-		switch {
-		case indplus != -1:
-			x = indplus
-		case indmin != -1:
-			x = indmin
-		case inddiv != -1:
-			x = inddiv
-		case indtim != -1:
-			x = indtim
+		for i := 0; i < len(input); i++ {
+			if strings.ContainsAny(string(input[i]), oper) {
+				op = string(input[i])
+			}
 		}
 
-		num1 = s[0:x]
-		op = string(s[x])
-		switch {
-		case len(s) == 5 && len(num1) == 1:
-			num2 = s[x+1 : x+2]
-		case len(s) == 6 && len(num1) == 1:
-			num2 = s[x+1 : x+3]
-		case len(s) == 7 && len(num1) == 1:
-			num2 = s[x+1 : x+4]
-		case len(s) == 8 && len(num1) == 1:
-			num2 = s[x+1 : x+5]
-		case len(s) == 6 && len(num1) == 2:
-			num2 = s[x+1 : x+2]
-		case len(s) == 7 && len(num1) == 2:
-			num2 = s[x+1 : x+3]
-		case len(s) == 8 && len(num1) == 2:
-			num2 = s[x+1 : x+4]
-		case len(s) == 9 && len(num1) == 2:
-			num2 = s[x+1 : x+5]
-		case len(s) == 7 && len(num1) == 2:
-			num2 = s[x+1 : x+2]
-		case len(s) == 8 && len(num1) == 3:
-			num2 = s[x+1 : x+3]
-		case len(s) == 9 && len(num1) == 3:
-			num2 = s[x+1 : x+4]
-		case len(s) == 10 && len(num1) == 3:
-			num2 = s[x+1 : x+5]
-		case len(s) == 8 && len(num1) == 4:
-			num2 = s[x+1 : x+2]
-		case len(s) == 9 && len(num1) == 4:
-			num2 = s[x+1 : x+3]
-		case len(s) == 10 && len(num1) == 4:
-			num2 = s[x+1 : x+4]
-		case len(s) == 11 && len(num1) == 4:
-			num2 = s[x+1 : x+5]
-		}
-
+		words := strings.Split(input, op)
+		num1 = words[0]
+		num2 = words[1]
 		fmt.Println(result(num1, op, num2))
 	}
 }
