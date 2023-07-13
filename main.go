@@ -18,8 +18,7 @@ func main() {
 	for {
 		input, _ := inputReader.ReadString('\n')
 		input = strings.ReplaceAll(input, " ", "")
-		input = strings.ReplaceAll(input, "\n", "")
-		input = strings.ReplaceAll(input, "\r", "")
+		input = strings.TrimSpace(input)
 
 		count = strings.Count(input, "+") + strings.Count(input, "-") + strings.Count(input, "*") + strings.Count(input, "/")
 		if count > 1 {
